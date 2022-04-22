@@ -13,7 +13,7 @@ const getApplicationAllowedOrigins = (): string[] => {
 		default:
 			return [
 				'http://localhost:3000',
-				'http://localhost:3001',
+				'http://localhost:3011',
 				'https://autoboto.netlify.app',
 			];
 	}

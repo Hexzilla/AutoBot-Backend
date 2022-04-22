@@ -30,15 +30,22 @@ class ContractController {
 			const method = methods.find(m => m[0] === entrypoint);
 			console.log('method', method)
 			if (!method) {
-				return false;
+				return {
+					success: false, 
+					message: 'Invalid method'
+				};
 			}
 
 			const transaction = await contract.methods[entrypoint](amount).send();
 			const confirm = await transaction.confirmation();
-			return true;
+			return null;
+
 		} catch (e) {
 			console.error('call_entrypoint', e);
-			return false;
+			return {
+				success: false,
+				error: e
+			};
 		}
 	}
 }

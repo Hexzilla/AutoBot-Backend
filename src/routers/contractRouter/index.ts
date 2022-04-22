@@ -17,7 +17,7 @@ class ContractRouter {
 		this._router.post('/call', async (req, res) => {
 			const {contract, entrypoint, amount} = req.body;
 			const result = await this._controller.call_entrypoint(contract, entrypoint, amount);
-			return res.status(200).json({ success: result });
+			return res.status(200).json(result);
 		});
 	}
 }
