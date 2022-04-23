@@ -6,7 +6,7 @@ const getApplicationAllowedOrigins = (): string[] => {
 	switch (env) {
 		case 'production':
 			return [
-				'https://pixl.xyz',
+				'https://autobots.netlify.app',
 				'https://autoboto.netlify.app',
 			];
 		case 'development':
@@ -15,6 +15,7 @@ const getApplicationAllowedOrigins = (): string[] => {
 				'http://localhost:3000',
 				'http://localhost:3011',
 				'https://autoboto.netlify.app',
+				'https://autobots.netlify.app',
 			];
 	}
 };
