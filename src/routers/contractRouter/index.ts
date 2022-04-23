@@ -16,7 +16,17 @@ class ContractRouter {
 	private _configure() {
 		this._router.post('/call', async (req, res) => {
 			const {contract, entrypoint, amount} = req.body;
-			const result = await this._controller.call_entrypoint(contract, entrypoint, amount);
+			const result = await this._controller.callEntrypoint(contract, entrypoint, amount);
+			return res.status(200).json(result);
+		});
+
+		this._router.get('/state/:userAddress', async (req, res) => {
+			const result = await this._controller.getState(req.params.userAddress);
+			return res.status(200).json(result);
+		});
+
+		this._router.post('/state/:userAddress', async (req, res) => {
+			const result = await this._controller.saveState(req.params.userAddress, req.body);
 			return res.status(200).json(result);
 		});
 	}

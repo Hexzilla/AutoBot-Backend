@@ -21,7 +21,7 @@ class ContractController {
 		});
 	}
 
-	async call_entrypoint(contractAddress: string, entrypoint: string, amount: number) {
+	async callEntrypoint(contractAddress: string, entrypoint: string, amount: number) {
 		console.log("call_entrypoint", contractAddress, entrypoint, amount);
 		try {
 			const contract = await this.tezos.contract.at(contractAddress)
@@ -46,6 +46,22 @@ class ContractController {
 				success: false,
 				error: e
 			};
+		}
+	}
+
+	async getState(userAddress: string) {
+		const state = await ContractModel.findOne({userAddress})
+		return {
+			success: true,
+			state,
+		}
+	}
+
+	async saveState(userAddress: string, data: any) {
+		const {entrypoints} = data;
+		await ContractModel.findOneAndUpdate({userAddress}, {entrypoints}, {upsert: true, useFindAndModify: false})
+		return {
+			success: true
 		}
 	}
 }

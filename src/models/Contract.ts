@@ -1,31 +1,42 @@
 import { Document, Schema, model } from 'mongoose'
 
+export interface Entrypoint {
+    contract: string,
+    method: string,
+    amount: number,
+    running: boolean
+}
+
 export interface Contract extends Document {
-    address: string,
-    entrypoint: string,
-    symbol: string,
-    decimals: string,
+    userAddress: string,
+    entrypoints: Entrypoint[]
 }
   
 const ContractSchema = new Schema<Contract>({
-    address: {
+    userAddress: {
         type: String,
         required: true,
         unique: true,
         index: true,
     },
-    entrypoint: {
-        type: String,
-        required: true
-    },
-    symbol: {
-        type: String,
-        required: true
-    },
-    decimals: {
-        type: String,
-        required: true
-    },
+    entrypoints: [{
+        contract: {
+            type: String,
+            required: true,
+        },
+        method: {
+            type: String,
+            required: true,
+        },
+        amount: {
+            type: Number,
+            required: true,
+        },
+        running: {
+            type: Boolean,
+            required: true,
+        }
+    }],
 },
 {
     timestamps: true 
