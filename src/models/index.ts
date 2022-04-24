@@ -1,3 +1,3 @@
-import './Contract';
+import './Entrypoint';
 
-export * from './Contract';
+export * from './Entrypoint';

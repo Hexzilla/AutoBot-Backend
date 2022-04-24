@@ -20,14 +20,14 @@ class ContractRouter {
 			return res.status(200).json(result);
 		});
 
-		this._router.get('/state/:userAddress', async (req, res) => {
-			const result = await this._controller.getState(req.params.userAddress);
+		this._router.get('/entrypoint', async (req, res) => {
+			const result = await this._controller.getEntrypoints();
 			return res.status(200).json(result);
 		});
 
-		this._router.post('/state/:userAddress', async (req, res) => {
-			const result = await this._controller.saveState(req.params.userAddress, req.body);
-			return res.status(200).json(result);
+		this._router.post('/entrypoint', async (req, res) => {
+			const success = await this._controller.saveEntrypoint(req.body);
+			return res.status(200).json({success: success});
 		});
 	}
 }

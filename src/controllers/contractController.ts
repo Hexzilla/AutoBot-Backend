@@ -3,9 +3,9 @@ import { model } from 'mongoose'
 import { MichelsonMap, TezosToolkit } from '@taquito/taquito';
 import { InMemorySigner, importKey } from '@taquito/signer';
 import { bytes2Char, char2Bytes } from '@taquito/utils';
-import { Contract } from '../models/Contract';
+import { Entrypoint } from '../models/Entrypoint';
 import { Config } from '../config/constants';
-const ContractModel = model<Contract>('Contract')
+const EntrypointModel = model<Entrypoint>('Entrypoint')
 
 dotenv.config({
 	path: '.env',
@@ -49,19 +49,34 @@ class ContractController {
 		}
 	}
 
-	async getState(userAddress: string) {
-		const state = await ContractModel.findOne({userAddress})
-		return {
-			success: true,
-			state,
+	async getEntrypoints() {
+		try {
+			const entrypoints = await EntrypointModel.find()
+			return { success: true, entrypoints }
+		} catch (err) {
+			console.error(err);
+			return { success: false };
 		}
 	}
 
-	async saveState(userAddress: string, data: any) {
-		const {entrypoints} = data;
-		await ContractModel.findOneAndUpdate({userAddress}, {entrypoints}, {upsert: true, useFindAndModify: false})
-		return {
-			success: true
+	async saveEntrypoint(data: Entrypoint) {
+		const {contract, method} = data;
+		console.log('entrypoints', contract, method, data)
+		
+		try {
+			let model = await EntrypointModel.findOne({contract, method})
+			console.log('model', model)
+			if (model) {
+				model.amount = data.amount;
+				model.running = data.running;
+			} else {
+				model = await new EntrypointModel(data)
+			}
+			await model.save();
+			return true;
+		}catch (err) {
+			console.error(err);
+			return false;
 		}
 	}
 }

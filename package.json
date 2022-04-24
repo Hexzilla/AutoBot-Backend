@@ -22,14 +22,15 @@
   "bugs": {
     "url": "https://github.com/PiXLtez/node-backend/issues"
   },
-  "engines" : { 
-    "node" : ">=16.0.0"
+  "engines": {
+    "node": ">=16.0.0"
   },
   "homepage": "https://github.com/PiXLtez/node-backend#readme",
   "dependencies": {
     "@taquito/signer": "^12.0.0",
     "@taquito/taquito": "^12.0.0",
     "@taquito/utils": "^12.0.0",
+    "@types/node-cron": "^3.0.1",
     "axios": "^0.26.1",
     "body-parser": "^1.19.1",
     "concurrently": "^7.0.0",
@@ -38,6 +39,7 @@
     "express": "^4.17.2",
     "mongodb": "^4.2.2",
     "mongoose": "^5.12.14",
+    "node-cron": "^3.0.0",
     "node-fetch": "^3.1.0",
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.3.0",
