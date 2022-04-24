@@ -1,6 +1,6 @@
 import { Document, Schema, model } from 'mongoose'
 
-export interface Entrypoint {
+export interface Entrypoint extends Document {
     contract: string,
     method: string,
     amount: number,
@@ -14,7 +14,7 @@ const EntrypointSchema = new Schema<Entrypoint>({
     },
     method: {
         type: String,
-        required: true,
+        required: false,
     },
     amount: {
         type: Number,
@@ -26,9 +26,16 @@ const EntrypointSchema = new Schema<Entrypoint>({
     }
 },
 {
+    toJSON: {
+        transform: function (doc, ret) {
+          ret.id = ret._id
+          delete ret.createdAt
+          delete ret.updatedAt
+          delete ret._id
+          delete ret.__v
+        },
+    },
     timestamps: true 
 })
-
-EntrypointSchema.index({ contract: 1, method: 1 }, { unique: true });
 
 export default model<Entrypoint>('Entrypoint', EntrypointSchema);

@@ -14,20 +14,26 @@ class ContractRouter {
 	}
 
 	private _configure() {
-		this._router.post('/call', async (req, res) => {
-			const {contract, entrypoint, amount} = req.body;
-			const result = await this._controller.callEntrypoint(contract, entrypoint, amount);
-			return res.status(200).json(result);
+		this._router.get('/entrypoints', async (req, res) => {
+			const entrypoints = await this._controller.getEntrypoints();
+			return res.status(200).json({
+				success: true,
+				entrypoints
+			});
 		});
 
-		this._router.get('/entrypoint', async (req, res) => {
-			const result = await this._controller.getEntrypoints();
-			return res.status(200).json(result);
+		this._router.delete('/entrypoints/:id', async (req, res) => {
+			const entrypoints = await this._controller.deleteEntrypoint(req.params.id);
+			return res.status(200).json({
+				success: true,
+				entrypoints
+			});
 		});
 
-		this._router.post('/entrypoint', async (req, res) => {
-			const success = await this._controller.saveEntrypoint(req.body);
-			return res.status(200).json({success: success});
+		this._router.post('/entrypoints', async (req, res) => {
+			const entrypoints = await this._controller.saveEntrypoints(req.body);
+			const success = entrypoints !== null;
+			return res.status(200).json({success: success, entrypoints});
 		});
 	}
 }

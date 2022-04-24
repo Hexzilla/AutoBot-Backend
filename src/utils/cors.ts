@@ -23,7 +23,7 @@ const getApplicationAllowedOrigins = (): string[] => {
 
 const AppliationCorsOptions: CorsOptions = {
 	origin: getApplicationAllowedOrigins(),
-	methods: ['PUT', 'GET', 'POST', 'OPTIONS'],
+	methods: ['PUT', 'GET', 'POST', 'OPTIONS', 'DELETE'],
 	optionsSuccessStatus: 200,
 };
 
